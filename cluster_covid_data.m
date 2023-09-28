@@ -8,7 +8,9 @@ testing = []; % 20% of all data
 for i = 1:9
     for j = 1:25
         if j <= 20
-            
+            % append to |training|;
+        else
+            % append to |testing|;
         end
     end
 end
