@@ -1,16 +1,16 @@
 load('COVIDbyCounty.mat');
-[labels, centroids] = kmeans(CNTY_COVID, 9); % 9 divisions
-CNTY_CENSUS_SORTED = sortrows(CNTY_CENSUS, 3); % sort by division
 
-training = []; % 80% of all data
-testing = []; % 20% of all data
+training = []; % 75% of all data
+testing = []; % 25% of all data
 
-for i = 1:9
-    for j = 1:25
-        if j <= 20
-            % append to |training|;
-        else
-            % append to |testing|;
-        end
+for i = 1:(length(CNTY_CENSUS_SORTED.fips)) % 3-1 ratio
+    if mod(i, 4) == 0
+        testing = [testing; CNTY_CENSUS_SORTED(i, :)];
+    else
+        training = [training; CNTY_CENSUS_SORTED(i, :)];
     end
 end
+
+k = 9; % subject to change
+[labels, centroids] = kmeans(CNTY_COVID, k);
+CNTY_CENSUS_SORTED = sortrows(CNTY_CENSUS, 3);
