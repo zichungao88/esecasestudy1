@@ -1,0 +1,6 @@
+nearestNeighbor = [];
+centroidAssignment = [];
+
+for i = 1:height(centroids)
+    for j = 1:width(trainingCases)
+        nearestNeighbor = [nearestNeighbor; norm(centroids(i, :) - trainingCases(j, :))];
