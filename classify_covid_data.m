@@ -3,6 +3,7 @@ centroidTesting = [];
 
 for i = 1:height(centroids)
     for j = 1:height(testingCases)
+        % use Euclidean distance to find the nearest centroid
         nearestNeighbor = [nearestNeighbor, norm(centroids(i, :) - ...
             testingCases(j, :))]; % row
     end
@@ -15,7 +16,7 @@ correct = 0;
 incorrect = 0;
 % set initial minimum value for later comparison
 minimum = centroidTesting(1, 1);
-index = 0;
+index = 1;
 
 for i = 1:width(centroidTesting) % loop through matrix of centroids
     for j = 1:height(centroidTesting)
@@ -25,13 +26,16 @@ for i = 1:width(centroidTesting) % loop through matrix of centroids
         end
     end
     % check if testing data matches centroids from training data
-    if centroidTraining(index) == testing.DIVISION(i)
+    if centroid_labels(index) == testing.DIVISION(i)
         correct = correct + 1;
     else
         incorrect = incorrect + 1;
     end
 end
 
+% calculate accuracy by dividing # correct by total #
 accuracy = correct / (correct + incorrect);
+disp("Accuracy: " + round(accuracy * 100 * 100) / 100 + "%");
 
-disp("The accuracy is " + round(accuracy * 100 * 100) / 100 + "%");
+% output file containg centroids and centroid_labels
+save("competition.mat", "centroids", "centroid_labels");

@@ -1,16 +1,18 @@
 load('COVIDbyCounty.mat');
-CNTY_CENSUS_SORTED = sortrows(CNTY_CENSUS, 3);
 
-training = []; % 75% of all data
-testing = []; % 25% of all data
-trainingCases = [];
-testingCases = [];
+training = []; % table of all locations for training stage
+testing = []; % table of all locations for testing stage
+trainingCases = []; % 156-week COVID data for training locations
+testingCases = []; % 156-week COVID data for testing locations
 
-for i = 1:(length(CNTY_CENSUS_SORTED.fips)) % 3-1 ratio
-    if mod(i, 4) == 0
-        testing = [testing; CNTY_CENSUS_SORTED(i, :)];
-    else
-        training = [training; CNTY_CENSUS_SORTED(i, :)];
+% 3-1 ratio of training group and testing group; in other words, 75% of all
+% locations will be implemented for training & the remaining 25% for
+% testing
+for i = 1:(length(CNTY_CENSUS.fips))
+    if mod(i, 4) == 0 % assign to testing for every 4 locations
+        testing = [testing; CNTY_CENSUS(i, :)];
+    else % assign the remaining three quarters to training
+        training = [training; CNTY_CENSUS(i, :)];
     end
 end
 
@@ -24,12 +26,12 @@ for i = 1:height(testing)
         testing(i, :).fips, :)];
 end
 
-k = 25; % subject to change
+k = 18; % k clusters
 % apply k-means algorithm on training group
-[indices, centroids] = kmeans(trainingCases, k, 'Replicates', 10);
+[indices, centroids] = kmeans(trainingCases, k, 'Replicates', 20);
 
 centroidDivision = [];
-centroidTraining = [];
+centroid_labels = [];
 
 for i = 1:k % loop through the k centroids
     for j = 1:height(indices)
@@ -39,6 +41,6 @@ for i = 1:k % loop through the k centroids
     end
     % determine the most frequent division in each centroid in order to
     % determine which division said centroid belongs to
-    centroidTraining = [centroidTraining; mode(centroidDivision)];
-    centroidDivision = [];
+    centroid_labels = [centroid_labels; mode(centroidDivision)];
+    centroidDivision = []; % clear current row for the next row of entries
 end
