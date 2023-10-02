@@ -24,21 +24,11 @@ for i = 1:height(testing)
         testing(i, :).fips, :)];
 end
 
-k = 25; % subject to change
+k = 9; % subject to change
 % apply k-means algorithm on training group
-[indices, centroids] = kmeans(trainingCases, k, 'Replicates', 10);
+[indices, centroids] = kmeans(trainingCases, k);
 
-centroidDivision = [];
-centroidTraining = [];
-
-for i = 1:k % loop through the k centroids
+for i = 1:k
     for j = 1:height(indices)
         if indices(j) == i
-            centroidDivision = [centroidDivision, training.DIVISION(j)];
-        end
-    end
-    % determine the most frequent division in each centroid in order to
-    % determine which division said centroid belongs to
-    centroidTraining = [centroidTraining; mode(centroidDivision)];
-    centroidDivision = [];
-end
+            
