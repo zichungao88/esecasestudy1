@@ -1,5 +1,4 @@
 load('COVIDbyCounty.mat');
-%SORTED = sortrows(CNTY_CENSUS, 3);
 
 training = []; % table of all locations for training stage
 testing = []; % table of all locations for testing stage
@@ -9,11 +8,11 @@ testingCases = []; % 156-week COVID data for testing locations
 % 3-1 ratio of training group and testing group; in other words, 75% of all
 % locations will be implemented for training & the remaining 25% for
 % testing
-for i = 1:(length(SORTED.fips))
+for i = 1:(length(CNTY_CENSUS.fips))
     if mod(i, 4) == 0 % assign to testing for every 4 locations
-        testing = [testing; SORTED(i, :)];
+        testing = [testing; CNTY_CENSUS(i, :)];
     else % assign the remaining three quarters to training
-        training = [training; SORTED(i, :)];
+        training = [training; CNTY_CENSUS(i, :)];
     end
 end
 
@@ -27,7 +26,7 @@ for i = 1:height(testing)
         testing(i, :).fips, :)];
 end
 
-k = randi([9, 100], 1, 1); % k clusters
+k = randi([9, 20], 1, 1); % k clusters
 % apply k-means algorithm on training group
 [indices, centroids] = kmeans(trainingCases, k, 'Replicates', 10);
 

@@ -26,7 +26,27 @@ for i = 1:height(testing)
         testing(i, :).fips, :)];
 end
 
-k = randi([20, 50], 1, 1); % k clusters
+tiledlayout('vertical');
+nexttile;
+hold on;
+for i = 1:height(trainingCases)
+    plot(trainingCases(i, :));
+end
+hold off;
+title('Training Group Data');
+xlabel('Date');
+ylabel('New Weekly Cases per 100K Population');
+nexttile;
+hold on;
+for i = 1:height(testingCases)
+    plot(testingCases(i, :));
+end
+hold off;
+title('Testing Group Data');
+xlabel('Date');
+ylabel('New Weekly Cases per 100K Population');
+
+k = randi([9, 20], 1, 1); % k clusters
 % apply k-means algorithm on training group
 [indices, centroids] = kmeans(trainingCases, k, 'Replicates', 10);
 

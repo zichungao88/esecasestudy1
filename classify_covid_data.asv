@@ -35,7 +35,7 @@ end
 
 % calculate accuracy by dividing # correct by total #
 accuracy = correct / (correct + incorrect);
-disp("Accuracy: " + correct + "/" + (correct + incorrect) + " (" + round(accuracy * 100 * 100) / 100 + "%)");
+disp("Accuracy: " + correct + "/" + (correct + incorrect) + "/" + round(accuracy * 100 * 100) / 100 + "%");
 
 % output file containg centroids and centroid_labels
 save("competition.mat", "centroids", "centroid_labels");
