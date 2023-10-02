@@ -14,11 +14,11 @@ end
 
 correct = 0;
 incorrect = 0;
-% set initial minimum value for later comparison
-minimum = centroidTesting(1, 1);
-index = 1;
 
 for i = 1:width(centroidTesting) % loop through matrix of centroids
+    % set initial minimum value for later comparison
+    minimum = centroidTesting(1, i);
+    index = 1;
     for j = 1:height(centroidTesting)
         if centroidTesting(j, i) < minimum % find minimum value
             minimum = centroidTesting(j, i);

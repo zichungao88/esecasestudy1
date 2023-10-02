@@ -26,9 +26,9 @@ for i = 1:height(testing)
         testing(i, :).fips, :)];
 end
 
-k = 18; % k clusters
+k = randi([20, 50], 1, 1); % k clusters
 % apply k-means algorithm on training group
-[indices, centroids] = kmeans(trainingCases, k, 'Replicates', 20);
+[indices, centroids] = kmeans(trainingCases, k, 'Replicates', 10);
 
 centroidDivision = [];
 centroid_labels = [];
