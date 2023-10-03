@@ -30,25 +30,41 @@ tiledlayout('vertical');
 nexttile;
 hold on;
 for i = 1:height(trainingCases)
-    plot(trainingCases(i, :));
+    plot(dates, trainingCases(i, :));
 end
 hold off;
+axis tight;
 title('Training Group Data');
-xlabel('Date');
+xlabel('Date (April 2020 ~ March 2023)');
 ylabel('New Weekly Cases per 100K Population');
+exportgraphics(gca, 'training_group_data.png');
 nexttile;
 hold on;
 for i = 1:height(testingCases)
-    plot(testingCases(i, :));
+    plot(dates, testingCases(i, :));
 end
 hold off;
+axis tight;
 title('Testing Group Data');
-xlabel('Date');
+xlabel('Date (April 2020 ~ March 2023)');
 ylabel('New Weekly Cases per 100K Population');
+exportgraphics(gca, 'testing_group_data.png');
 
 k = randi([9, 20], 1, 1); % k clusters
 % apply k-means algorithm on training group
 [indices, centroids] = kmeans(trainingCases, k, 'Replicates', 10);
+
+figure;
+hold on;
+for i = 1:height(centroids)
+    plot(dates, centroids(i, :));
+end
+hold off;
+axis tight;
+title('Trained Centroids');
+xlabel('Date (April 2020 ~ March 2023)');
+ylabel('New Weekly Cases per 100K Population');
+exportgraphics(gca, 'trained_centroids.png');
 
 centroidDivision = [];
 centroid_labels = [];
