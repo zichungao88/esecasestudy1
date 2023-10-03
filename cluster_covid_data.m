@@ -26,7 +26,7 @@ for i = 1:height(testing)
         testing(i, :).fips, :)];
 end
 
-tiledlayout('vertical');
+split = tiledlayout(2, 1);
 nexttile;
 hold on;
 for i = 1:height(trainingCases)
@@ -37,7 +37,6 @@ axis tight;
 title('Training Group Data');
 xlabel('Date (April 2020 ~ March 2023)');
 ylabel('New Weekly Cases per 100K Population');
-exportgraphics(gca, 'training_group_data.png');
 nexttile;
 hold on;
 for i = 1:height(testingCases)
@@ -48,7 +47,7 @@ axis tight;
 title('Testing Group Data');
 xlabel('Date (April 2020 ~ March 2023)');
 ylabel('New Weekly Cases per 100K Population');
-exportgraphics(gca, 'testing_group_data.png');
+exportgraphics(split, 'training_testing_group_data.png');
 
 k = randi([9, 20], 1, 1); % k clusters
 % apply k-means algorithm on training group
