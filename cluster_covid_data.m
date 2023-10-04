@@ -49,7 +49,7 @@ xlabel('Date (April 2020 ~ March 2023)');
 ylabel('New Weekly Cases per 100K Population');
 exportgraphics(split, 'training_testing_group_data.png');
 
-k = randi([9, 20], 1, 1); % k clusters
+k = randi([9, 25], 1, 1); % k clusters
 % apply k-means algorithm on training group
 [indices, centroids] = kmeans(trainingCases, k, 'Replicates', 10);
 

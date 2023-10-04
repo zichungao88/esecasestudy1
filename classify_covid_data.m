@@ -21,7 +21,7 @@ hold off;
 axis tight;
 title('Testing with Trained Centroids');
 xlabel('Counties in Testing Group');
-ylabel('Euclidean Distance from Each of the k Centroids');
+ylabel("Euclidean Distance from Each of the " + k + " Centroids");
 exportgraphics(gca, 'testing_with_trained_centroids.png');
 
 correct = 0;
@@ -47,8 +47,10 @@ end
 
 % calculate accuracy by dividing # correct by total #
 accuracy = correct / (correct + incorrect);
+disp("Results:")
 disp("Accuracy: " + correct + "/" + (correct + incorrect) + " (" + ...
     round(accuracy * 100 * 100) / 100 + "%)");
+disp("Score: " + (correct - k / 2.0));
 
 % output file containg centroids and centroid_labels
 save("competition.mat", "centroids", "centroid_labels");
